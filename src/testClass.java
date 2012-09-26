@@ -69,8 +69,17 @@ class testClass {
                         System.out.println(inputLine);
                     in.close();
 
-
-
+                    //trying to parse the HTML in a useful form?
+                    // difficult to do by the looks of things.
+                    /*DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                    dbf.setValidating(false);
+                    dbf.setNamespaceAware(true);
+                    dbf.setIgnoringComments(false);
+                    dbf.setIgnoringElementContentWhitespace(false);
+                    dbf.setExpandEntityReferences(false);
+                    DocumentBuilder db = dbf.newDocumentBuilder();
+                    return db.parse(new InputSource(new StringReader(source)));
+                    */
 
                 }
             }
