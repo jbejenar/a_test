@@ -23,7 +23,7 @@ class testClass {
 
         System.out.println("hello wold");
 
-        System.setProperty("http.proxyHost", "proxy.anz");
+        System.setProperty("http.proxyHost", "proxy");
         System.setProperty("http.proxyPort", "80");
 
         try {
