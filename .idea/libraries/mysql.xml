@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mysql">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../DbVisualizer-8.0.10/jdbc/mysql/mysql.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
