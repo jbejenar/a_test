@@ -61,6 +61,8 @@ class testClass {
                     URLConnection urlConnNews = urlNews.openConnection();
                     urlConnNews.connect();
 
+
+
                 }
             }
 
