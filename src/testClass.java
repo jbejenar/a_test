@@ -1,6 +1,9 @@
 
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,7 +23,7 @@ class testClass {
 
         System.out.println("hello wold");
 
-        System.setProperty("http.proxyHost", "proxyhost2");
+        System.setProperty("http.proxyHost", "proxy.anz");
         System.setProperty("http.proxyPort", "80");
 
         try {
@@ -32,10 +35,34 @@ class testClass {
 
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(urlConn.getInputStream());
+            doc.getDocumentElement().normalize();
 
-            Document doc = null;
-            doc = db.parse(urlConn.getInputStream());
-            System.out.println("document: " + doc.toString());
+
+
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
+            NodeList nList = doc.getElementsByTagName("item");
+            System.out.println("-----------------------");
+
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+
+                Node nNode = nList.item(temp);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element eElement = (Element) nNode;
+
+                    System.out.println("Title       : " + getTagValue("title", eElement));
+                    System.out.println("Description : " + getTagValue("description", eElement));
+                    System.out.println("Link        : " + getTagValue("guid", eElement));
+                    System.out.println("\n");
+
+                    URL urlNews = new URL(getTagValue("guid", eElement));
+                    URLConnection urlConnNews = urlNews.openConnection();
+                    urlConnNews.connect();
+
+                }
+            }
 
 
         } catch (Exception e) {
@@ -44,4 +71,15 @@ class testClass {
 
 
     }
+
+    private static String getTagValue(String sTag, Element eElement) {
+        NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+
+        Node nValue = (Node) nlList.item(0);
+
+        return nValue.getNodeValue();
+    }
+
 }
+
+
