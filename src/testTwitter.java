@@ -1,4 +1,6 @@
 import twitter4j.*;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.List;
 
 /**
@@ -10,25 +12,24 @@ import java.util.List;
  */
 public class testTwitter {
 
-    public void testTwitter(String queryStock) {
+    public static void main(String args[]) {
 
-
-        Twitter twitter = new TwitterFactory().getInstance();
-
+        System.setProperty("http.proxyHost", "proxy");
+        System.setProperty("http.proxyPort", "80");
 
         try{
-            Query query = new Query(queryStock);
-            QueryResult result;
 
+            Twitter twitter = new TwitterFactory().getInstance();
+            Query query = new Query("apple");
+            QueryResult result = twitter.search(query);
 
-            do {
-                result = twitter.search(query);
-                List<Tweet> tweets = result.getTweets();
-                for (Tweet tweet : tweets) {
-                    System.out.println("@" + tweet.getFromUser() + " - " + tweet.getText());
-                }
-            } while ((query = result.nextQuery()) != null);
+            List<Tweet> tweets = result.getTweets();
 
+            for (Tweet tweet : tweets){
+
+                System.out.println("tweet: " + tweet.getText());
+
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
