@@ -25,12 +25,14 @@ class testClass {
 
         System.out.println("hello wold");
 
-        System.setProperty("http.proxyHost", "proxy");
+        System.setProperty("http.proxyHost", "proxy.anz");
         System.setProperty("http.proxyPort", "80");
 
         try {
 
-            URL url = new URL("http://feeds.theage.com.au/rssheadlines/top.xml");
+            //URL url = new URL("http://feeds.theage.com.au/rssheadlines/top.xml");
+            URL url = new URL("http://www.google.com/finance/company_news?q=NASDAQ:AAPL&ei=tIpiUPiHGsabkAX3Cg&output=rss");
+
             //InputStream in = url.openStream();
             URLConnection urlConn = url.openConnection();
             urlConn.connect();
@@ -56,10 +58,10 @@ class testClass {
 
                     System.out.println("Title       : " + getTagValue("title", eElement));
                     System.out.println("Description : " + getTagValue("description", eElement));
-                    System.out.println("Link        : " + getTagValue("guid", eElement));
+                    System.out.println("Link        : " + getTagValue("link", eElement));
                     System.out.println("\n");
 
-                    URL urlNews = new URL(getTagValue("guid", eElement));
+                    /*URL urlNews = new URL(getTagValue("link", eElement));
                     URLConnection urlConnNews = urlNews.openConnection();
 
                     BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -68,7 +70,7 @@ class testClass {
                     while ((inputLine = in.readLine()) != null)
                         System.out.println(inputLine);
                     in.close();
-
+                    */
                     //trying to parse the HTML in a useful form?
                     // difficult to do by the looks of things.
                     /*DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
