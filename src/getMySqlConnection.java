@@ -5,7 +5,9 @@
  * Time: 2:57 PM
  * To change this template use File | Settings | File Templates.
  */
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class getMySqlConnection {
     public static void main(String[] args)
