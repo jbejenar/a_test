@@ -2,7 +2,6 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-DROP SCHEMA IF EXISTS `mydb` ;
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
 USE `mydb` ;
 
@@ -47,8 +46,8 @@ DROP TABLE IF EXISTS `mydb`.`CompanyAliases` ;
 
 CREATE  TABLE IF NOT EXISTS `mydb`.`CompanyAliases` (
   `Company_StockCode` VARCHAR(10) NOT NULL ,
-  `Alias` VARCHAR(200) NULL ,
-  PRIMARY KEY (`Company_StockCode`) ,
+  `Alias` VARCHAR(200) NOT NULL ,
+  PRIMARY KEY (`Company_StockCode`, `Alias`) ,
   INDEX `fk_CompanyAliases_Company_idx` (`Company_StockCode` ASC) ,
   CONSTRAINT `fk_CompanyAliases_Company`
     FOREIGN KEY (`Company_StockCode` )
