@@ -4,6 +4,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
+import twitter4j.Tweet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -11,6 +12,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+
+import twitter4j.*;
 
 
 /**
@@ -25,12 +30,14 @@ class testClass {
 
         System.out.println("hello wold");
 
-        System.setProperty("http.proxyHost", "proxy");
+        System.setProperty("http.proxyHost", "proxy.anz");
         System.setProperty("http.proxyPort", "80");
 
         try {
 
-            URL url = new URL("http://feeds.theage.com.au/rssheadlines/top.xml");
+            //URL url = new URL("http://feeds.theage.com.au/rssheadlines/top.xml");
+            URL url = new URL("http://www.google.com/finance/company_news?q=NASDAQ:AAPL&ei=tIpiUPiHGsabkAX3Cg&output=rss");
+
             //InputStream in = url.openStream();
             URLConnection urlConn = url.openConnection();
             urlConn.connect();
@@ -56,10 +63,10 @@ class testClass {
 
                     System.out.println("Title       : " + getTagValue("title", eElement));
                     System.out.println("Description : " + getTagValue("description", eElement));
-                    System.out.println("Link        : " + getTagValue("guid", eElement));
+                    System.out.println("Link        : " + getTagValue("link", eElement));
                     System.out.println("\n");
 
-                    URL urlNews = new URL(getTagValue("guid", eElement));
+                    /*URL urlNews = new URL(getTagValue("link", eElement));
                     URLConnection urlConnNews = urlNews.openConnection();
 
                     BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -68,7 +75,7 @@ class testClass {
                     while ((inputLine = in.readLine()) != null)
                         System.out.println(inputLine);
                     in.close();
-
+                    */
                     //trying to parse the HTML in a useful form?
                     // difficult to do by the looks of things.
                     /*DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -81,8 +88,24 @@ class testClass {
                     return db.parse(new InputSource(new StringReader(source)));
                     */
 
+
                 }
             }
+
+            String company = "appl";
+            List<Tweet> tweetResults = getTwitterArticles.getNews(company);
+            System.out.println("Twitter results for: " + company + "\n");
+            for (Tweet tweet : tweetResults){
+                System.out.println("TwitterResults:     ") ;
+                System.out.println("    Date Created:   " + tweet.getCreatedAt());
+                System.out.println("    GeoLocation:    " + tweet.getGeoLocation());
+                System.out.println("    UserName:       " + tweet.getFromUserName());
+                System.out.println("    Text:           " + tweet.getText());
+                System.out.println("    Language:       " + tweet.getIsoLanguageCode());
+                System.out.println("\n");
+
+            }
+
 
 
         } catch (Exception e) {
