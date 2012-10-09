@@ -10,29 +10,30 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class getMySqlConnection {
-    public static void main(String[] args)
-    {
-        MySqlDb db = new MySqlDb();
-        Connection conn=db.dbConnect(
-                "jdbc:mysql://localhost:3306/testDb", "root", "");
+
+    protected Connection conn;
+    protected String url;
+    protected String user;
+    protected String password;
+
+    public Connection getMySqlConnection(String url, String user, String password) {
+        //To change body of created methods use File | Settings | File Templates.
+        getMySqlConnection.this.url = url;
+        getMySqlConnection.this.user = user;
+        getMySqlConnection.this.password = password;
+        return  getMySqlConnection.this.dbConnect();
+
     }
 
-}
-
-class MySqlDb
-{
-    public MySqlDb() {}
-
-    public Connection dbConnect(String db_connect_string,
-                                String db_userid, String db_password)
+        protected Connection dbConnect()
     {
         try
         {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection conn = DriverManager.getConnection(
-                    db_connect_string, db_userid, db_password);
+                    url, user, password);
 
-            System.out.println("connected");
+            System.out.println("connected to " + url );
             return conn;
 
         }
