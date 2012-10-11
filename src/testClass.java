@@ -30,69 +30,12 @@ class testClass {
 
         System.out.println("hello wold");
 
-        System.setProperty("http.proxyHost", "proxy.anz");
+        System.setProperty("http.proxyHost", "proxy");
         System.setProperty("http.proxyPort", "80");
 
         try {
 
-            //URL url = new URL("http://feeds.theage.com.au/rssheadlines/top.xml");
-            URL url = new URL("http://www.google.com/finance/company_news?q=NASDAQ:AAPL&ei=tIpiUPiHGsabkAX3Cg&output=rss");
-
-            //InputStream in = url.openStream();
-            URLConnection urlConn = url.openConnection();
-            urlConn.connect();
-
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(urlConn.getInputStream());
-            doc.getDocumentElement().normalize();
-
-
-
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-
-            NodeList nList = doc.getElementsByTagName("item");
-            System.out.println("-----------------------");
-
-            for (int temp = 0; temp < nList.getLength(); temp++) {
-
-                Node nNode = nList.item(temp);
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-                    Element eElement = (Element) nNode;
-
-                    System.out.println("Title       : " + getTagValue("title", eElement));
-                    System.out.println("Description : " + getTagValue("description", eElement));
-                    System.out.println("Link        : " + getTagValue("link", eElement));
-                    System.out.println("\n");
-
-                    /*URL urlNews = new URL(getTagValue("link", eElement));
-                    URLConnection urlConnNews = urlNews.openConnection();
-
-                    BufferedReader in = new BufferedReader(new InputStreamReader(
-                            urlConnNews.getInputStream()));
-                    String inputLine;
-                    while ((inputLine = in.readLine()) != null)
-                        System.out.println(inputLine);
-                    in.close();
-                    */
-                    //trying to parse the HTML in a useful form?
-                    // difficult to do by the looks of things.
-                    /*DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-                    dbf.setValidating(false);
-                    dbf.setNamespaceAware(true);
-                    dbf.setIgnoringComments(false);
-                    dbf.setIgnoringElementContentWhitespace(false);
-                    dbf.setExpandEntityReferences(false);
-                    DocumentBuilder db = dbf.newDocumentBuilder();
-                    return db.parse(new InputSource(new StringReader(source)));
-                    */
-
-
-                }
-            }
-
-            String company = "appl";
+            String company = "aapl";
             List<Tweet> tweetResults = getTwitterArticles.getNews(company);
             System.out.println("Twitter results for: " + company + "\n");
             for (Tweet tweet : tweetResults){
@@ -114,15 +57,6 @@ class testClass {
 
 
     }
-
-    private static String getTagValue(String sTag, Element eElement) {
-        NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
-
-        Node nValue = (Node) nlList.item(0);
-
-        return nValue.getNodeValue();
-    }
-
 }
 
 
